@@ -1,0 +1,27 @@
+<div class="dialog" id="{{id}}">
+    <div class="header">
+        <div class="title">{{title}}</div>
+        <div class="functions">
+            {{#if search}}
+                <div class="search">
+                    <input type="text" placeholder="Hledat"/>
+                    <div class="material-icons">{{{searchIcon}}}</div>
+                </div>
+            {{/if}}
+            {{#functions}}
+                <div id="{{id}}" class="function material-icons" title="{{title}}">{{{icon}}}</div>
+            {{/functions}}
+            {{#if closable}}
+                <div id="close" class="function material-icons" title="Zavřít">{{{closeIcon}}}</div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="content"></div>
+    {{#if buttons}}
+    <div class="buttons">
+        {{#buttons}}
+            <button id="{{id}}" class="{{type}}">{{caption}}</button>
+        {{/buttons}}
+    </div>
+    {{/if}}
+</div>

@@ -1,0 +1,6 @@
+# ignore all *.map files in all folders, including build root
+**/*.map
+
+# ignore all *.md files in all folders, including build root
+**/*.md
+

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "customers-controller.js",
+  "sourceRoot": "",
+  "sources": [
+    "customers-controller.ts"
+  ],
+  "names": [],
+  "mappings": ";;;AAAA,+DAA2D;AAI3D,MAAa,mBAAoB,SAAQ,8BAAa;IAElD,YAAmB,OAAyB;QACxC,KAAK,CAAC,OAAO,CAAC,CAAC;IACnB,CAAC;IAEM,SAAS;QACZ,OAAO,EAEN,CAAC;IACN,CAAC;CAEJ;AAZD,kDAYC"
+}

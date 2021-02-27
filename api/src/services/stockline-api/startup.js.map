@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "startup.js",
+  "sourceRoot": "",
+  "sources": [
+    "startup.ts"
+  ],
+  "names": [],
+  "mappings": ";;AAAA,mDAA+C;AAG/C,MAAM,GAAG,GAAG,IAAI,4BAAY,EAAE,CAAC;AAG/B,GAAG,CAAC,GAAG,EAAE,CAAC"
+}

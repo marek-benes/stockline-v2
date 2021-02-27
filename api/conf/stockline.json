@@ -1,0 +1,9 @@
+{
+  "context": {
+    "mongoUrl": "mongodb://localhost/stockline",
+    "logLevel": 2
+  },
+  "StocklineApi": {
+    "port": 5000
+  }
+}

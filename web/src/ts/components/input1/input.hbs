@@ -1,0 +1,5 @@
+<div class="ui-input1 {{#if noLabel}}no-label{{/if}}">
+    <input id="{{id}}" type="string" value="{{value}}" placeholder="{{placeholder}}" />
+    {{#if label}}<label for="{{id}}">{{label}}{{#if required}} *{{/if}}</label>{{/if}}
+    <div class="message">{{description}}</div>
+</div>

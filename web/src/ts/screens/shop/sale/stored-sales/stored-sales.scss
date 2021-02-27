@@ -1,0 +1,30 @@
+div#unfinished-sales {
+    div#table-unfinished-sales tr.row {
+        td {
+            span.material-icons {
+                cursor: pointer;
+                font-size: 18px;
+                position: relative;
+                top: 1px;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            &:hover {
+                span.material-icons {
+                    opacity: 1;
+                }
+            }
+
+            &[data-column^=function] {
+                text-align: center;
+            }
+        }
+
+        &:hover {
+            span.material-icons {
+                opacity: 0.6;
+            }
+        }
+    }
+}

@@ -1,0 +1,251 @@
+@import '../../../scss/variables';
+
+div.dialog-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.dialog-overlay {
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(4px);
+    }
+
+    div.dialog {
+        position: relative;
+        background: #fff;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        overflow: hidden;
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+
+        &.loader {
+            // filter: blur(1px);
+            @keyframes loader-border {
+                from {
+                    box-shadow: 0 2px 0 0 rgba(255,255,255,0);
+                }
+
+                50% {
+                    box-shadow: 0 2px 0 0 $green
+                }
+
+                to {
+                    box-shadow: 0 2px 0 0 rgba(255,255,255,0);
+                }
+            }
+            div.header {
+                animation-duration: 1.4s;
+                animation-name: loader-border;
+                animation-iteration-count: infinite;
+            }
+        }
+
+        div.header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 60px;
+            min-height: 60px;
+            background: #fff;
+
+            div.title {
+                font-size: 18px;
+            }
+
+            div.functions {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                margin-left: auto;
+
+                div.search {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    margin-right: 15px;
+
+                    input {
+                        font-size: 14px;
+                        outline: none;
+                        display: block;
+                        width: 100%;
+                        padding: 5px;
+                        border: none;
+                        border-bottom: 2px solid #e8ecef;
+                        font-family: "opensans", sans-serif;
+                        background: #fff;
+                        transition: border-color 0.2s ease;
+
+                        &:focus {
+                            border-bottom: 2px solid #ddd;
+                        }
+                    }
+
+                    div.material-icons {
+                        position: absolute;
+                        right: 0px;
+                        opacity: 0.6;
+                        transition: opacity 0.2s ease;
+                        pointer-events: none;
+                    }
+                }
+
+                div.function {
+                    margin: 0 0 0 5px;
+                    cursor: pointer;
+                    opacity: 0.6;
+                    transition: opacity 0.2s ease;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+
+        div.content {
+            left: 0;
+            right: 0;
+            padding: 5px 20px 20px 20px;
+            overflow: auto;
+
+            pre {
+                margin: 0;
+                padding: 0;
+            }
+
+            div.alert {
+                font-size: 12px;
+                color: $red;
+                margin-top: 20px;
+            }
+
+            div.input {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+
+                &:last-child { margin-bottom: 0; }
+
+                label {
+                    display: flex;
+                    width: 120px;
+                    align-items: center;
+                    margin-bottom: 5px;
+                    font-size: 12px;
+                }
+
+                input {
+                    outline: none;
+                    display: block;
+                    width: 100%;
+                    padding: 10px 5px;
+                    border: none;
+                    border-bottom: 2px solid #ddd;
+                    font-family: "opensans", sans-serif;
+                    background: #f5f5f5;
+                    border-radius: 3px 3px 0 0;
+                    transition: border-color 0.2s ease;
+
+                    &[type=checkbox] {
+                        width: auto;
+                        position: relative;
+                        left: -4px;
+                        width: 0;
+                        height: 0;
+
+                        &:before {
+                            content: '';
+                            display: block;
+                            border: 2px solid #ddd;
+                            border-radius: 3px;
+                            width: 12px;
+                            height: 12px;
+                            cursor: pointer;
+                            box-shadow: 0 0 0 2px #fff inset;
+                            transition: border-color 0.2s ease, background 0.2s ease;
+                        }
+
+                        &:checked:before {
+                            background-color: $green;
+                        }
+                        &:hover:before {
+                            border-color: #bbb;
+                        }
+                    }
+
+                    &:focus, &:hover {
+                        border-color: #bbb;
+                    }
+
+                    &.invalid {
+                        border-color: $red;
+                    }
+                }
+            }
+
+        }
+
+        div.buttons {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+            height: 60px;
+            min-height: 60px;
+            background: #fff;
+
+            button {
+                color: #000;
+                border: 2px solid $grey-light;
+                border-radius: 3px;
+                padding: 6px 20px;
+                margin-left: 10px;
+                background: #fff;
+                cursor: pointer;
+                transition: background-color 0.2s ease, border 0.2s ease;
+
+                &:hover {
+                    border-color: #ddd;
+                }
+
+                &.submit {
+                    color: #fff;
+                    background-color: $green;
+                    border: 1px solid $green;
+
+                    &:hover {
+                        background-color: $green-darker;
+                        border-color: $green-darker;
+                    }
+                }
+
+                &.delete {
+                    color: #fff;
+                    background-color: $red;
+                    border: 1px solid $red;
+
+                    &:hover {
+                        background-color: $red-darker;
+                        border-color: $red-darker;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div#dialog-confirm {
+    div.content {
+        padding: 5px 20px 20px 20px;
+    }
+}

@@ -1,0 +1,84 @@
+@import '../../../../../scss/variables';
+// @import '../../../../../scss/buttons';
+
+div#screen-products-variant-detail {
+    div.general,
+    div.variant {
+        background: #fff;
+        padding: 0 20px 0 64px;
+
+        display: flex;
+        flex-wrap: wrap;
+        // flex-wrap: wrap;
+        flex-direction: row;
+        flex-flow: row wrap;
+
+        > div {
+            margin-right: 40px;
+            margin-bottom: 20px;
+            min-width: 120px;
+
+            div.label {
+                font-family: opensans-light;
+                margin-bottom: 5px;
+            }
+            div.value {
+                font-size: 16px;
+                font-family: opensans-semibold;
+            }
+        }
+
+        @media (max-width: $sidebar-breakpoint) {
+            padding-left: 20px;
+        }
+
+        div.ui-select,
+        div.ui-input {
+            margin: 0 0 0 -10px;
+        }
+    }
+
+    div.variant {
+        padding-top: 20px;
+        margin-top: 1px;
+    }
+
+    div.tables {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        @media (min-width: $sidebar-breakpoint) {
+            flex-direction: row;
+        }
+
+        div.stocks,
+        div.prices {
+            margin: 20px 0 0 0;
+
+            @media (min-width: $sidebar-breakpoint) {
+                margin: 20px;
+                max-width: 400px;
+            }
+
+            tr.row-button td div {
+                padding-right: 20px;
+            }
+        }
+
+        div.barcodes {
+            margin: 20px 0 0 0;
+
+            @media (min-width: $sidebar-breakpoint) {
+                margin: 20px;
+                max-width: 200px;
+            }
+
+            tr.row-button td div {
+                padding-right: 20px;
+            }
+        }
+    }
+
+    // @include buttons;
+}

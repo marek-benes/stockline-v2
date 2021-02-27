@@ -1,0 +1,139 @@
+
+@import '../../../../scss/variables';
+
+div#screen-sale {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    border-top: 1px solid $grey-light;
+
+    div.left {
+        // width: 100%;
+        // padding: 20px;
+        flex-grow: 2;
+        overflow: auto;
+
+        div.table {
+            overflow: visible;
+
+            [data-property="vatRate"],
+            [data-property="vat"],
+            [data-property="priceWithoutVat"],
+            [data-property="price"] {
+                text-align: right;
+            }
+
+            [data-column="vatRate"],
+            [data-column="vat"],
+            [data-column="priceWithoutVat"],
+            [data-column="price"] {
+                text-align: right;
+            }
+        }
+    }
+
+    div.right {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        min-width: 340px;
+        max-width: 420px;
+        border-left: 1px solid $grey-light;
+        flex-grow: 1;
+        padding: 20px;
+
+        div.buttons {
+            margin-top: auto;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+
+            button {
+                color: #000;
+                border: 2px solid $grey-light;
+                border-radius: 3px;
+                padding: 6px 20px;
+                margin-left: 10px;
+                background: #fff;
+                cursor: pointer;
+                transition: background-color 0.2s ease, border 0.2s ease;
+
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+                font-family: opensans-semibold;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                span.material-icons {
+                    margin-right: 10px;
+                }
+
+                &:hover {
+                    border-color: #ddd;
+                }
+
+                &.submit {
+                    color: #fff;
+                    background-color: $green;
+                    border: 1px solid $green;
+
+                    &:hover {
+                        background-color: $green-darker;
+                        border-color: $green-darker;
+                    }
+                }
+
+                &.delete {
+                    color: #fff;
+                    background-color: $red;
+                    border: 1px solid $red;
+
+                    &:hover {
+                        background-color: $red-darker;
+                        border-color: $red-darker;
+                    }
+                }
+            }
+        }
+
+    }
+
+    div#table-products tr.row {
+        td {
+            span.material-icons {
+                cursor: pointer;
+                font-size: 18px;
+                position: relative;
+                top: 1px;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            &:hover {
+                span.material-icons {
+                    opacity: 1;
+                }
+            }
+
+            &[data-column^=function] {
+                text-align: center;
+            }
+        }
+
+        &:hover {
+            span.material-icons {
+                opacity: 0.6;
+            }
+        }
+    }
+}
+
+div#unfinished-sales {
+    div.content { padding: 0; }
+}

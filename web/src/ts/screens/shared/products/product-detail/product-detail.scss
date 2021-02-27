@@ -1,0 +1,62 @@
+@import '../../../../../scss/variables';
+
+div#screen-products-detail {
+    div.general,
+    div.classification {
+        background: #fff;
+        padding: 0 20px 0 64px;
+
+        display: flex;
+        flex-wrap: wrap;
+        flex-flow: row wrap;
+
+        > div {
+            margin-right: 40px;
+            margin-bottom: 20px;
+            min-width: 120px;
+
+            div.label {
+                font-family: opensans-light;
+                margin-bottom: 5px;
+            }
+            div.value {
+                font-size: 16px;
+                font-family: opensans-semibold;
+            }
+        }
+
+        @media (max-width: $sidebar-breakpoint) {
+            padding-left: 20px;
+        }
+
+        div.ui-select,
+        div.ui-input {
+            margin: 0 0 0 -10px;
+        }
+    }
+
+    div.classification {
+        padding-top: 20px;
+        margin-top: 1px;
+    }
+
+    div.variants {
+        padding: 20px 0;
+
+        @media (min-width: $sidebar-breakpoint) {
+            padding: 20px 40px;
+
+            div.table {
+                max-width: 600px;
+
+            }
+        }
+    }
+    div.type {
+        background-color: #fff;
+    }
+
+    pre {
+        margin-left: 20px;
+    }
+}

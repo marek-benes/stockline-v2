@@ -1,0 +1,11 @@
+<div class="ui-select">
+    {{#if label}}<label for="{{id}}">{{label}}{{#if required}} *{{/if}}</label>{{/if}}
+    <input id="{{id}}" type="string" value="{{name}}" data-value="{{value}}" placeholder="{{placeholder}}" />
+
+    <div class="options" />
+        {{#options}}
+            <div class="option" data-value="{{value}}">{{name}}</div>
+        {{/options}}
+    </div>
+    <div class="message">{{description}}</div>
+</div>

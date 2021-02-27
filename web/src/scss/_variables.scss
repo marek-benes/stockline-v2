@@ -1,0 +1,23 @@
+$green: #4cb61b;
+$green-darker: #43a217;
+
+$red: #f13800;
+$red-darker: #de3401;
+
+$grey-dark: #3b4048;
+$grey-light: #e8ecef;
+
+$sidebar-size: 260px;
+$sidebar-breakpoint: 900px; // 768px;
+
+$transition: 0.2s ease;
+
+@mixin noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}

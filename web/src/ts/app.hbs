@@ -1,0 +1,63 @@
+<div id="app">
+    <div id="sidebar">
+        <div id="logo">Stockline v2</div>
+
+        <a href="#/dashboard" id="link-{{screens.dashboard.id}}" class="selected">
+            <div class="material-icons">{{{icons.Dashboard}}}</div>
+            <span>{{screens.dashboard.title}}</span>
+        </a>
+
+        <hr/>
+
+        {{#if isShop}}
+            <a href="#/sale" id="link-{{screens.sale.id}}">
+                <div class="material-icons">{{{icons.ShoppingCart}}}</div>
+                <span>{{screens.sale.title}}</span>
+            </a>
+            <a href="#/receipts" id="link-{{screens.receipts.id}}">
+                <div class="material-icons">{{{icons.List}}}</div>
+                <span>{{screens.receipts.title}}</span>
+            </a>
+            <hr/>
+        {{/if}}
+
+        <a href="#/products" id="link-{{screens.products.id}}">
+            <div class="material-icons">{{{icons.List}}}</div>
+            <span>{{screens.products.title}}</span>
+        </a>
+
+        {{#if isWholesale}}
+            <a href="#/customers" id="link-{{screens.customers.id}}">
+                <div class="material-icons">{{{icons.People}}}</div>
+                <span>{{screens.customers.title}}</span>
+            </a>
+            <div class="section">
+                <input type="checkbox" id="section-1" />
+                <label for="section-1">
+                    <div class="material-icons closed">{{{icons.ChevronRight}}}</div>
+                    <div class="material-icons opened">{{{icons.ExpandMore}}}</div>
+                    <span>Další</span>
+                </label>
+                <div class="dropdown">
+                    <a href="#/brands" id="link-{{screens.brands.id}}">
+                        <div class="material-icons">{{{icons.List}}}</div>
+                        {{screens.brands.title}}
+                    </a>
+                    <a href="#/categories" id="link-{{screens.categories.id}}">
+                        <div class="material-icons">{{{icons.List}}}</div>
+                        {{screens.categories.title}}
+                    </a>
+                    <a href="#/suppliers" id="link-{{screens.suppliers.id}}">
+                        <div class="material-icons">{{{icons.List}}}</div>
+                        {{screens.suppliers.title}}
+                    </a>
+                </div>
+            </div>
+        {{/if}}
+
+        <div id="user">
+            <div class="material-icons">{{{icons.Person}}}</div>{{user.name}}<div class="exit material-icons">{{{icons.Exit}}}</div>
+        </div>
+    </div>
+    <div id="main"></div>
+</div>

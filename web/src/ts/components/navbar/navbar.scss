@@ -1,0 +1,84 @@
+@import '../../../scss/variables';
+
+div#navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    background: #fff;
+
+    div.hamburger, div.back {
+        cursor: pointer;
+        margin-right: 20px;
+    }
+
+    div.nav-left {
+        font-size: 18px;
+    }
+
+    div.nav-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    div.nav-right div.search {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        input {
+            font-size: 14px;
+            outline: none;
+            display: block;
+            width: 100%;
+            padding: 5px;
+            border: none;
+            border-bottom: 2px solid #e8ecef;
+            font-family: "opensans", sans-serif;
+            background: #fff;
+            transition: border-color 0.2s ease;
+
+            &:focus {
+                border-bottom: 2px solid #ddd;
+            }
+        }
+
+        div.material-icons {
+            position: absolute;
+            right: 0px;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+    }
+
+    div.nav-right div.function {
+        cursor: pointer;
+        margin-left: 20px;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    @keyframes loader {
+        0% {
+            box-shadow: 0 -2px 0 white inset;
+        }
+        50% {
+            box-shadow: 0 -2px 0 $green inset;
+        }
+        100% {
+            box-shadow: 0 -2px 0 white inset;
+        }
+    }
+
+    &.loading {
+        animation-duration: 1s;
+        animation-name: loader;
+        animation-iteration-count: infinite;
+    }
+}

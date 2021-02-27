@@ -1,0 +1,192 @@
+div#sidebar {
+    display: flex;
+    flex-direction: column;
+
+    min-width: $sidebar-size;
+    padding: 0 20px 20px 20px;
+    height: 100%;
+    color: #fff;
+    background: $grey-dark;
+    font-size: 14px;
+    transition: margin-left 0.3s ease;
+    overflow: hidden;
+    overflow-y: auto;
+
+    @media (max-width: $sidebar-breakpoint) {
+        margin-left: -$sidebar-size;
+    
+        &.open {
+            margin-left: 0;
+        }
+    }
+
+    &.hide {
+        margin-left: -$sidebar-size;
+    }
+
+    div#logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 1.2px;
+    }
+    
+    hr {
+        border: none;
+        border-top: 1px solid rgba(255,255,255,.2);
+        margin: 10px -20px 10px -20px;
+    }
+    
+    > a {
+        position: relative;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 50px;
+        padding: 0 20px 0 20px;
+        min-height: 50px;
+        text-decoration: none;
+        color: rgba(255,255,255,0.6);
+        border-radius: 3px;
+        transition: color 0.2s ease, background-color 0.2s ease;
+        
+        &.selected {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            
+            div.material-icons {
+                color: #4ede0b;
+                /* #4cb61b; */
+            }
+        }
+
+        &:hover {
+            color: #fff;
+        }
+        div.material-icons {
+            margin-right: 20px;
+        }
+    }
+
+    div.section {
+        input {
+            display: none;
+        }
+
+        label {
+            position: relative;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            height: 50px;
+            padding: 0 20px 0 20px;
+            min-height: 50px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.6);
+            border-radius: 3px;
+            transition: color 0.2s ease, background-color 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+                color: #fff;
+            }
+
+            div.material-icons {
+                margin-right: 20px;
+            }
+
+            div.opened {
+                display: none;
+            }
+        }
+
+        div.dropdown {
+            // display: none;
+            max-height: 0;
+            overflow: hidden;
+            // transform: scaleY(0);
+            
+            border-radius: 3px;
+            background-color: #fff;
+            color: #000;
+            transition: max-height 0.2s ease;
+            // margin: 0 20px;
+
+            a {
+                position: relative;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                height: 50px;
+                padding: 0 15px;
+                min-height: 50px;
+                text-decoration: none;
+                color: rgba(0,0,0,0.8);
+                border-radius: 3px;
+                transition: color 0.2s ease, background-color 0.2s ease;
+
+                div.material-icons {
+                    margin-right: 15px;
+                }
+
+                &:hover {
+                    color: #000;
+                }
+
+                &.selected {
+                    background-color: rgba(0,0,0,0.1);
+            
+                    div.material-icons {
+                        color: #4cb61b;
+                    }
+                }
+            }
+        }
+
+        input:checked + label + div.dropdown {
+            max-height: 150px
+        }
+
+        input:checked + label {
+            div.opened {
+                display: inline-block;
+            }
+            div.closed {
+                display: none;
+            }
+        }
+    }
+
+    div#user {
+        position: relative;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 50px;
+        padding: 0 15px;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 3px;
+        margin-top: auto;
+        min-height: 50px;
+        
+        div.material-icons {
+            margin-right: 15px;
+        }
+        
+        div.exit.material-icons {
+            margin-right: 0;
+            margin-left: auto;
+            color: rgba(255,255,255,0.6);
+            transition: color 0.2s ease;
+            cursor: pointer;
+        }
+        
+        &:hover div.exit.material-icons {
+            color: #fff;
+        }
+    }
+}
