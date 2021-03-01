@@ -1,8 +1,12 @@
-import "../scss/index.scss";
+import "./scss/index.scss";
 
-import { App } from "./App";
-import { Login } from "./components/login/Login";
-import { AuthClient } from "./data/clients/AuthClient";
+import { App } from "./ts/App";
+import { Login } from "./ts/components/login/Login";
+import { AuthClient } from "./ts/data/clients/AuthClient";
+
+// this does not seem right
+// const Handlebars = require("handlebars/dist/handlebars");
+// console.log(Handlebars);
 
 const api = "http://localhost:5000";
 

@@ -26,6 +26,7 @@
         "interface-name": false,
         "max-classes-per-file": true,
         "prefer-for-of": false,
-        "array-type": [true, "array-simple"]
+        "array-type": [true, "array-simple"],
+        "no-var-requires": false
     }
 }

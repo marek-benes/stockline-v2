@@ -4,7 +4,8 @@
   "description": "STOCKLINE 2 API services",
   "scripts": {
     "clean": "rm -f -r ./dist",
-    "compile": "npm run clean && tsc"
+    "compile": "npm run clean && tsc",
+    "start-api": "npm run compile && node ./dist/services/stockline-api/startup.js"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,8 @@
-import moment from "moment";
+// import moment from "moment";
 
 interface IStoredObject<T> {
-    timestamp: string;
+    // timestamp: number;
+    timestamp: number;
     data: T;
 }
 
@@ -16,17 +17,18 @@ export class Storage<T> {
 
     public add (data: T) {
         this.data.push({
-            timestamp: new Date().toISOString(),
+            // timestamp: new Date().toISOString(),
+            timestamp: Date.now(),
             data
         });
         this.save();
     }
 
-    public get (timestamp: string) {
+    public get (timestamp: number) {
         return this.data.filter((x) => x.timestamp === timestamp)[0];
     }
 
-    public remove (timestamp: string) {
+    public remove (timestamp: number) {
         this.data = this.data.filter((x) => x.timestamp !== timestamp);
         this.save();
     }
@@ -44,7 +46,8 @@ export class Storage<T> {
         try {
             this.data = JSON.parse(stored ?? "[]");
 
-            const time = moment().subtract(this.daysToExpire, "days").toISOString();
+            // const time = moment().subtract(this.daysToExpire, "days").toISOString();
+            const time = Date.now() - (this.daysToExpire * 24 * 60 * 60 * 1000);
             this.data.filter((x) => x.timestamp >= time);
         } catch (e) {
             this.data = [];
