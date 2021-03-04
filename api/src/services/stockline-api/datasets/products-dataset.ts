@@ -1,12 +1,12 @@
-import { StocklineDataset } from "../../../lib/dataset/stockline-dataset";
 import { DbCollection } from "../../../lib/mongo/types";
 import { StocklineContext } from "../../../lib/stockline-context";
 import { FilterQuery, FindOneOptions, ObjectId } from "mongodb";
+import { Dataset } from "../dataset";
 
-export class ProductsDataset extends StocklineDataset {
+export class ProductsDataset extends Dataset {
 
     constructor(context: StocklineContext) {
-        super(context, "/products", DbCollection.Products);
+        super(context, DbCollection.Products);
     }
 
     protected buildFilterQuery(queryString: any): FilterQuery<any> {

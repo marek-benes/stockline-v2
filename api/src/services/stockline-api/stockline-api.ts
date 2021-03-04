@@ -1,22 +1,24 @@
-import { ApiServer } from "../../lib/rest/api-server";
-import { StocklineApiServerOptions } from "./types";
-import { AuthController } from "./auth-controller";
-import { UsersController } from "./users-controller";
-import { StoresController } from "./stores-controller";
-import { ProductsController } from "./products-controller";
-import { CustomersController } from "./customers-controller";
-import { CategoriesController } from "./categories-controller";
-import { SuppliersController } from "./suppliers-controller";
-import { BrandsController } from "./brands-controller";
-import { StocklineDataset } from "../../lib/dataset/stockline-dataset";
-import { BadRequestError, InternalServerError } from "restify-errors";
 import { Next, Request, RequestHandler, Response } from "restify";
-import { DATASET_STORE } from "./dataset-store";
-import { ReceiptsController } from "./receipts-controller";
+import { ApiServer } from "../../lib/rest/api-server";
+import { AuthController } from "./controllers/auth-controller";
+import { UsersController } from "./controllers/users-controller";
+import { StoresController } from "./controllers/stores-controller";
+import { ProductsController } from "./controllers/products-controller";
+import { CustomersController } from "./controllers/customers-controller";
+import { CategoriesController } from "./controllers/categories-controller";
+import { SuppliersController } from "./controllers/suppliers-controller";
+import { BrandsController } from "./controllers/brands-controller";
+import { ReceiptsController } from "./controllers/receipts-controller";
+import { ApiServerOptions } from "../../lib/rest/types";
+import { DATASET_STORE, MODEL_STORE } from "./data-stores";
+import { Dataset } from "./dataset";
+import { Model } from "./model";
+import { Utils } from "../../lib/utils";
 
-export class StocklineApi extends ApiServer<StocklineApiServerOptions> {
+export class StocklineApi extends ApiServer<ApiServerOptions> {
 
-    private datasets: StocklineDataset[];
+    private datasets: { [key: string]: Dataset } = {};
+    private models: { [key: string]: Model } = {};
 
     public constructor() {
         super("StocklineApi");
@@ -32,31 +34,57 @@ export class StocklineApi extends ApiServer<StocklineApiServerOptions> {
         this.addController(new StoresController(this.context));
         this.addController(new SuppliersController(this.context));
 
-        // Datasets registry
-        this.datasets = [];
         // Register all datasets in store
         for (let key of Object.keys(DATASET_STORE)) {
-            let dataset: StocklineDataset = new DATASET_STORE[key](this.context);
-
-            // Validation
-            if (!dataset?.route) {
-                this.context.logger.w(`Dataset ${key} has no valid route`);
-                continue;
-            }
-            if (!dataset.route?.startsWith("/")) {
-                this.context.logger.w(`Dataset ${key} has invalid route (not starting with /)`);
-                continue;
-            }
-
-            // Push to evidence
-            this.datasets.push(dataset);
-
-            // Add route handler
-            this.addRoute("GET", dataset.route, this.getDataset);
+            const route = `/datasets/${Utils.toKebabCase(key.replace("Dataset", ""))}`;
+            this.datasets[route] = new DATASET_STORE[key](this.context);
+            this.addRoute("GET", route, this.getDataset);
         }
+        this.context.logger.i(`Registered ${Object.keys(DATASET_STORE).length} dataset(s) from store`);
 
-        this.context.logger.i(`Registered ${this.datasets.length} dataset(s) from store`);
+        // Register all models in store
+        for (let key of Object.keys(MODEL_STORE)) {
+            const route = `/models/${Utils.toKebabCase(key.replace("Model", ""))}`;
+            this.models[route] = new MODEL_STORE[key](this.context);
+            this.addRoute("GET", route, this.getModel);
+
+        }
+        this.context.logger.i(`Registered ${Object.keys(MODEL_STORE).length} model(s) from store`);
     }
+
+    public getDataset: RequestHandler = async (req: Request, res: Response, next: Next) => {
+        const startTime = new Date().getTime();
+        const route: string = <string>req.getRoute().path;
+
+        // Find dataset
+        let dataset = this.datasets[route];
+
+        // Dataset execution
+        let data = await dataset.execute(StocklineApi.propertiesToLowerCase(req.query));
+
+        this.context.logger.i(`${route} executed (${new Date().getTime() - startTime}ms)`);
+
+        // Response 200 Ok
+        res.send(200, data);
+        return next();
+    };
+
+    public getModel: RequestHandler = async (req: Request, res: Response, next: Next) => {
+        const startTime = new Date().getTime();
+        const route: string = <string>req.getRoute().path;
+
+        // Find action
+        let model = this.models[route];
+
+        // Model execution
+        let data = await model.execute(StocklineApi.propertiesToLowerCase(req.query));
+
+        this.context.logger.i(`${route} executed (${new Date().getTime() - startTime}ms)`);
+
+        // Response 200 Ok
+        res.send(200, data);
+        return next();
+    };
 
     private static propertiesToLowerCase(o: any): any {
         let key, keys = Object.keys(o);
@@ -69,34 +97,5 @@ export class StocklineApi extends ApiServer<StocklineApiServerOptions> {
 
         return l;
     }
-
-    // GET ${dataset.descriptor.route}
-    public getDataset: RequestHandler = async (req: Request, res: Response, next: Next) => {
-        try {
-            const startTime = new Date().getTime();
-
-            // Find dataset
-            let dataset = this.datasets.find(x => x.route == req.getRoute().path);
-
-            // Dataset execution
-            let data = await dataset.execute(StocklineApi.propertiesToLowerCase(req.query));
-
-            this.context.logger.i(`${dataset.route} executed (${new Date().getTime() - startTime}ms)`);
-
-            // Response 200 Ok
-            res.send(200, data);
-            return next();
-        }
-        catch (e) {
-            if (e instanceof BadRequestError) {
-                return next(e);
-            }
-            else {
-                this.context.logger.w(`Error occurred during dataset executing. Message: ${e.message}`);
-                return next(new InternalServerError(e.message));
-            }
-
-        }
-    };
 
 }

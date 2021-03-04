@@ -1,9 +1,9 @@
-import { ApiController } from "../../lib/rest/api-controller";
-import { ApiRequest, ApiRoute } from "../../lib/rest/types";
+import { ApiController } from "../../../lib/rest/api-controller";
+import { ApiRequest, ApiRoute } from "../../../lib/rest/types";
 import { Next, RequestHandler, Response } from "restify";
-import { DbCollection } from "../../lib/mongo/types";
-import { StocklineContext } from "../../lib/stockline-context";
-import { Receipt } from "../../lib/types/receipt";
+import { DbCollection } from "../../../lib/mongo/types";
+import { StocklineContext } from "../../../lib/stockline-context";
+import { Receipt } from "../../../lib/types/receipt";
 import { BadRequestError, InternalServerError } from "restify-errors";
 
 export class ReceiptsController extends ApiController {

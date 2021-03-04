@@ -1,12 +1,12 @@
 import { Next, RequestHandler, Response } from "restify";
 import { BadRequestError, UnauthorizedError } from "restify-errors";
-import { ApiController } from "../../lib/rest/api-controller";
-import { ApiRequest, ApiRoute } from "../../lib/rest/types";
-import { UserStore } from "./user-store";
-import { CryptoHelper } from "../../lib/helpers/crypto-helper";
-import { DbCollection } from "../../lib/mongo/types";
-import { User } from "../../lib/types/user";
-import { StocklineContext } from "../../lib/stockline-context";
+import { ApiController } from "../../../lib/rest/api-controller";
+import { ApiRequest, ApiRoute } from "../../../lib/rest/types";
+import { UserStore } from "../user-store";
+import { CryptoHelper } from "../../../lib/helpers/crypto-helper";
+import { DbCollection } from "../../../lib/mongo/types";
+import { User } from "../../../lib/types/user";
+import { StocklineContext } from "../../../lib/stockline-context";
 
 export class AuthController extends ApiController {
 

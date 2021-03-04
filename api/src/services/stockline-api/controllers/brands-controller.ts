@@ -1,11 +1,11 @@
-import { ApiController } from "../../lib/rest/api-controller";
-import { ApiRoute } from "../../lib/rest/types";
+import { ApiController } from "../../../lib/rest/api-controller";
+import { ApiRoute } from "../../../lib/rest/types";
 import { Next, Request, RequestHandler, Response } from "restify";
-import { DbCollection } from "../../lib/mongo/types";
-import { StocklineContext } from "../../lib/stockline-context";
+import { DbCollection } from "../../../lib/mongo/types";
+import { StocklineContext } from "../../../lib/stockline-context";
 import { BadRequestError, UnprocessableEntityError } from "restify-errors";
-import { MongoHelper } from "../../lib/helpers/mongo-helper";
-import { Brand } from "../../lib/types/brand";
+import { MongoHelper } from "../../../lib/helpers/mongo-helper";
+import { Brand } from "../../../lib/types/brand";
 import { ObjectId } from "bson";
 
 export class BrandsController extends ApiController {

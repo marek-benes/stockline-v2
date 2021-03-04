@@ -1,4 +1,6 @@
-import { ApiServerOptions } from "../../lib/rest/types";
-
-export interface StocklineApiServerOptions extends ApiServerOptions {
+export interface DatasetResult {
+    pageSize: number;
+    page: number;
+    total: number;
+    data: any[];
 }

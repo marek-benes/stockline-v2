@@ -1,18 +1,16 @@
 import { FilterQuery, FindOneOptions } from "mongodb";
-import { DbCollection } from "../mongo/types";
-import { MongoHelper } from "../helpers/mongo-helper";
-import { StocklineContext } from "../stockline-context";
+import { StocklineContext } from "../../lib/stockline-context";
+import { DbCollection } from "../../lib/mongo/types";
 import { DatasetResult } from "./types";
+import { MongoHelper } from "../../lib/helpers/mongo-helper";
 
-export abstract class StocklineDataset {
+export abstract class Dataset {
 
-    public readonly route: string;
     protected readonly context: StocklineContext;
     protected readonly collection?: string;
 
-    protected constructor(context: StocklineContext, route: string, collection?: DbCollection) {
+    protected constructor(context: StocklineContext, collection?: DbCollection) {
         this.context = context;
-        this.route = route;
         this.collection = collection;
     }
 
@@ -21,7 +19,7 @@ export abstract class StocklineDataset {
         const filter = this.buildFilterQuery(queryString);
 
         // Build mongo FindOptions from URL query string
-        const options = this.buildFindOptions(queryString);
+        const options = MongoHelper.buildFindOptions(queryString);
 
         // Get count
         let count = await this.context.mongo.countDocuments(this.collection, filter);
@@ -44,4 +42,5 @@ export abstract class StocklineDataset {
     protected buildFindOptions(queryString: any): FindOneOptions<any> | undefined {
         return MongoHelper.buildFindOptions(queryString);
     }
+
 }

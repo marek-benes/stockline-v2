@@ -17,3 +17,5 @@ export const DATASET_STORE = {
     SuppliersDataset,
     UsersDataset
 };
+
+export const MODEL_STORE = {};
