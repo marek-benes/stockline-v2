@@ -7,6 +7,7 @@ import { CryptoHelper } from "../../../lib/helpers/crypto-helper";
 import { DbCollection } from "../../../lib/mongo/types";
 import { User } from "../../../lib/types/user";
 import { StocklineContext } from "../../../lib/stockline-context";
+import { ObjectId } from "bson";
 
 export class UsersController extends ApiController {
 
@@ -24,11 +25,13 @@ export class UsersController extends ApiController {
     }
 
     public getUser: RequestHandler = async (req: ApiRequest, res: Response, next: Next) => {
-        // Find user by id
-        const user = await this.context.mongo.findOne<User>(DbCollection.Users, req.params.id, { projection: { "password": 0 } });
+        // Find document
+        const user = await this.context.mongo.findOne<User>(DbCollection.Users, new ObjectId(req.params.id),
+            { projection: { "password": 0 } }
+        );
 
+        // Send response
         res.send(200, user);
-
         return next();
     };
 

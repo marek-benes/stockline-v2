@@ -23,7 +23,8 @@ export class ProductsController extends ApiController {
 
         // Not found?
         if (!product) {
-            res.send(200, document);
+            // Send response
+            res.send(200);
             return next();
         }
 
@@ -55,7 +56,6 @@ export class ProductsController extends ApiController {
 
         // Send response
         res.send(200, result);
-
         return next();
     };
 

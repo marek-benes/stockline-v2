@@ -23,7 +23,6 @@ export class StoresController extends ApiController {
 
         // Send response
         res.send(200, document);
-
         return next();
     };
 

@@ -5,6 +5,7 @@ import { DbCollection } from "../../../lib/mongo/types";
 import { StocklineContext } from "../../../lib/stockline-context";
 import { Receipt } from "../../../lib/types/receipt";
 import { BadRequestError, InternalServerError } from "restify-errors";
+import { ObjectId } from "bson";
 
 export class ReceiptsController extends ApiController {
 
@@ -21,11 +22,12 @@ export class ReceiptsController extends ApiController {
     }
 
     public getReceipt: RequestHandler = async (req: ApiRequest, res: Response, next: Next) => {
-        // Find receipt by id
-        const receipt = await this.context.mongo.findOne<Receipt>(DbCollection.Receipts, req.params.id);
+        // Find document
+        const receipt = await this.context.mongo.findOne<Receipt>(DbCollection.Receipts, new ObjectId(req.params.id));
+
+        // Send response
 
         res.send(200, receipt);
-
         return next();
     };
 
