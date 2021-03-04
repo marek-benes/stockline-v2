@@ -5,7 +5,6 @@ import { DbCollection } from "../../../lib/mongo/types";
 import { StocklineContext } from "../../../lib/stockline-context";
 import { Product, ProductVariant, Stock } from "../../../lib/types/product";
 import { ObjectId } from "bson";
-import { BadRequestError } from "restify-errors";
 
 export class ProductsController extends ApiController {
 
@@ -24,7 +23,8 @@ export class ProductsController extends ApiController {
 
         // Not found?
         if (!product) {
-            return next(new BadRequestError());
+            res.send(200, document);
+            return next();
         }
 
         const variants = await this.context.mongo.find<ProductVariant>(DbCollection.ProductsVariants, { product_id: product.id }, {

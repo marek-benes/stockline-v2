@@ -24,13 +24,7 @@ export class ReceiptsController extends ApiController {
         // Find receipt by id
         const receipt = await this.context.mongo.findOne<Receipt>(DbCollection.Receipts, req.params.id);
 
-        // Not found?
-        if (receipt == null) {
-            res.send(204);
-        }
-        else {
-            res.send(200, receipt);
-        }
+        res.send(200, receipt);
 
         return next();
     };

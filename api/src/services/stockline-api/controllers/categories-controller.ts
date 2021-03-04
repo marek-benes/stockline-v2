@@ -27,11 +27,6 @@ export class CategoriesController extends ApiController {
         // Find document
         const document = await this.context.mongo.findOne<Category>(DbCollection.Categories, new ObjectId(req.params.id));
 
-        // Not found?
-        if (!document) {
-            return next(new BadRequestError());
-        }
-
         // Send response
         res.send(200, document);
 

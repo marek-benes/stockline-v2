@@ -27,11 +27,6 @@ export class SuppliersController extends ApiController {
         // Find document
         const document = await this.context.mongo.findOne<Supplier>(DbCollection.Suppliers, new ObjectId(req.params.id));
 
-        // Not found?
-        if (!document) {
-            return next(new BadRequestError());
-        }
-
         // Send response
         res.send(200, document);
 

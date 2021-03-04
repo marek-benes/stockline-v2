@@ -27,13 +27,7 @@ export class UsersController extends ApiController {
         // Find user by id
         const user = await this.context.mongo.findOne<User>(DbCollection.Users, req.params.id, { projection: { "password": 0 } });
 
-        // Not found?
-        if (user == null) {
-            res.send(204);
-        }
-        else {
-            res.send(200, user);
-        }
+        res.send(200, user);
 
         return next();
     };
