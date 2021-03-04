@@ -4,7 +4,7 @@ import { CryptoHelper } from "../../lib/helpers/crypto-helper";
 import moment from "moment";
 import { ObjectId } from "bson";
 
-const TOKEN_LIFETIME = 20;  // Token lifetime in minutes
+const TOKEN_LIFETIME = 48;  // Token lifetime in hours
 
 export module UserStore {
 
@@ -14,7 +14,7 @@ export module UserStore {
         let token = CryptoHelper.generateToken();
 
         authUsers[token] = {
-            expiration: moment().add(TOKEN_LIFETIME, "minutes").toDate(),
+            expiration: moment().add(TOKEN_LIFETIME, "hours").toDate(),
             user: {
                 id: user.id,
                 name: user.name,
@@ -34,7 +34,7 @@ export module UserStore {
         }
 
         if (renewToken) {
-            authUser.expiration = moment().add(TOKEN_LIFETIME, "minutes").toDate();
+            authUser.expiration = moment().add(TOKEN_LIFETIME, "hours").toDate();
         }
 
         return authUser.user;

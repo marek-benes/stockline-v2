@@ -52,6 +52,18 @@ export class StocklineApi extends ApiServer<ApiServerOptions> {
         this.context.logger.i(`Registered ${Object.keys(MODEL_STORE).length} model(s) from store`);
     }
 
+    private static propertiesToLowerCase(o: any): any {
+        let key, keys = Object.keys(o);
+        let n = keys.length;
+        let l: any = {};
+        while (n--) {
+            key = keys[n];
+            l[key.toLowerCase()] = o[key];
+        }
+
+        return l;
+    }
+
     public getDataset: RequestHandler = async (req: Request, res: Response, next: Next) => {
         const startTime = new Date().getTime();
         const route: string = <string>req.getRoute().path;
@@ -85,17 +97,5 @@ export class StocklineApi extends ApiServer<ApiServerOptions> {
         res.send(200, data);
         return next();
     };
-
-    private static propertiesToLowerCase(o: any): any {
-        let key, keys = Object.keys(o);
-        let n = keys.length;
-        let l: any = {};
-        while (n--) {
-            key = keys[n];
-            l[key.toLowerCase()] = o[key];
-        }
-
-        return l;
-    }
 
 }
