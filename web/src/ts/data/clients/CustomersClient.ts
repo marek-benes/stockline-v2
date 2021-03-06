@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import { ICustomer, ICustomerRequest } from "../../models/api/ICustomer";
 import { IDataset } from "../../models/api/IDataset";
 import { CachedData } from "../CachedData";
@@ -9,8 +10,8 @@ export class CustomersClient {
 
     private cachedCustomers: CachedData<IDataset<ICustomer[]>>;
 
-    constructor (private baseUrl: string, token: string) {
-        this.httpClient = new HttpClient(this.baseUrl);
+    constructor (private api: API, token: string) {
+        this.httpClient = new HttpClient();
 
         this.httpHeaders = {
             "Accept": "application/json",
@@ -21,16 +22,15 @@ export class CustomersClient {
 
     public async getCustomers (options?: ICustomerRequest): Promise<ICustomer[]> {
         if (!this.cachedCustomers) {
-            this.cachedCustomers = new CachedData(async () => this.httpClient.get<IDataset<ICustomer[]>>(`/customers${this.createQueryString(options)}`, this.httpHeaders));
+            this.cachedCustomers = new CachedData(async () => this.httpClient.get<IDataset<ICustomer[]>>(this.api.data + `/datasets/customers${this.createQueryString(options)}`, this.httpHeaders));
         }
         const customers = await this.cachedCustomers.getData();
         return customers.data;
     }
 
     public async getCustomer (id: string): Promise<ICustomer> {
-        const customers = await this.getCustomers({ limit: 1000 });
-        const customer = customers.filter((x) => x.id === id)[0];
-        return customer;
+        const customers = await this.httpClient.get<IDataset<ICustomer[]>>(this.api.data + `/datasets/customers?id=${id}`, this.httpHeaders);
+        return customers?.data[0];
     }
 
     private createQueryString (options?: object): string {

@@ -11,6 +11,7 @@ import { SuppliersClient } from "./data/clients/SuppliersClient";
 import { UsersClient } from "./data/clients/UsersClient";
 import { IStore } from "./models/api/IStore";
 import { IUser } from "./models/api/IUser";
+import { API } from "./models/IApi";
 
 export class AppContext {
     public router: Router;
@@ -29,7 +30,7 @@ export class AppContext {
 
     public barcodeReader: BarcodeReader;
 
-    constructor (api: string, token: string) {
+    constructor (api: API, token: string) {
         this.router = new Router();
 
         this.productsClient = new ProductsClient(api, token);

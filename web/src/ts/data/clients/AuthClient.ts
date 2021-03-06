@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import { IUser } from "../../models/api/IUser";
 import { HttpClient } from "./HttpClient";
 
@@ -36,8 +37,8 @@ export class AuthClient {
     private httpClient: HttpClient;
     private httpHeaders: { [key: string]: number | string };
 
-    constructor (public readonly baseUrl: string) {
-        this.httpClient = new HttpClient(this.baseUrl);
+    constructor (public readonly api: API) {
+        this.httpClient = new HttpClient();
 
         this.httpHeaders = {
             "Accept": "application/json",
@@ -55,7 +56,7 @@ export class AuthClient {
             Authorization: `Basic ${token}`
         };
 
-        const userInfo: IUser = await this.httpClient.get("/auth", headers);
+        const userInfo: IUser = await this.httpClient.get(this.api.stockline + "/auth", headers);
         if (userInfo) {
             userInfo.token = token;
             return userInfo;
@@ -70,7 +71,7 @@ export class AuthClient {
             username
         };
 
-        const userInfo: IUser = await this.httpClient.post("/auth", payload, this.httpHeaders);
+        const userInfo: IUser = await this.httpClient.post(this.api.stockline + "/auth", payload, this.httpHeaders);
         AuthClient.storeUserInfo(userInfo);
 
         return userInfo;

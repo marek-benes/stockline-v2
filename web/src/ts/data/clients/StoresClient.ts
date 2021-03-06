@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import { IDataset } from "../../models/api/IDataset";
 import { IStore } from "../../models/api/IStore";
 import { CachedData } from "../CachedData";
@@ -9,8 +10,8 @@ export class StoresClient {
 
     private cachedStores: CachedData<IDataset<IStore[]>>;
 
-    constructor (private baseUrl: string, token: string) {
-        this.httpClient = new HttpClient(this.baseUrl);
+    constructor (private api: API, token: string) {
+        this.httpClient = new HttpClient();
 
         this.httpHeaders = {
             "Accept": "application/json",
@@ -21,7 +22,7 @@ export class StoresClient {
 
     public async getStores (): Promise<IStore[]> {
         if (!this.cachedStores) {
-            this.cachedStores = new CachedData(async () => this.httpClient.get<IDataset<IStore[]>>(`/stores`, this.httpHeaders));
+            this.cachedStores = new CachedData(async () => this.httpClient.get<IDataset<IStore[]>>(this.api.data + `/datasets/stores`, this.httpHeaders));
         }
 
         const stores = await this.cachedStores.getData();
@@ -29,7 +30,7 @@ export class StoresClient {
     }
 
     public async getStore (id: string): Promise<IStore> {
-        const store = await this.httpClient.get<IStore>(`/stores/${id}`, this.httpHeaders);
-        return store;
+        const stores = await this.httpClient.get<IDataset<IStore[]>>(this.api.data + `/datasets/stores?id=${id}`, this.httpHeaders);
+        return stores?.data[0];
     }
 }

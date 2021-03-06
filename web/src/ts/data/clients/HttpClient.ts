@@ -5,20 +5,18 @@ interface IHttpHeaders {
 }
 
 export class HttpClient {
-    constructor (private baseUrl: string) { }
-
-    public async get<T> (route: string, headers: IHttpHeaders): Promise<T> {
-        console.log("GET", this.baseUrl + route);
-        const response = await fetch(this.baseUrl + route, {
+    public async get<T> (url: string, headers: IHttpHeaders): Promise<T> {
+        console.log("GET", url);
+        const response = await fetch(url, {
             headers: this.getHeaders(headers)
         });
 
         return this.createResponse<T>(response);
     }
 
-    public async post<T = void> (route: string, payload: any, headers: IHttpHeaders): Promise<T> {
-        console.log("POST", this.baseUrl + route, payload);
-        const response = await fetch(this.baseUrl + route, {
+    public async post<T = void> (url: string, payload: any, headers: IHttpHeaders): Promise<T> {
+        console.log("POST", url, payload);
+        const response = await fetch(url, {
             method: "POST",
             body: payload !== undefined ? JSON.stringify(payload) : undefined,
             headers: this.getHeaders(headers)
@@ -27,9 +25,9 @@ export class HttpClient {
         return this.createResponse<T>(response);
     }
 
-    public async put<T = void> (route: string, payload: any, headers: IHttpHeaders): Promise<T> {
-        console.log("PUT", this.baseUrl + route, payload);
-        const response = await fetch(this.baseUrl + route, {
+    public async put<T = void> (url: string, payload: any, headers: IHttpHeaders): Promise<T> {
+        console.log("PUT", url, payload);
+        const response = await fetch(url, {
             method: "PUT",
             body: payload !== undefined ? JSON.stringify(payload) : undefined,
             headers: this.getHeaders(headers)
@@ -38,9 +36,9 @@ export class HttpClient {
         return this.createResponse<T>(response);
     }
 
-    public async delete<T = void> (route: string, payload: any, headers: IHttpHeaders): Promise<T> {
-        console.log("DELETE", this.baseUrl + route, payload);
-        const response = await fetch(this.baseUrl + route, {
+    public async delete<T = void> (url: string, payload: any, headers: IHttpHeaders): Promise<T> {
+        console.log("DELETE", url, payload);
+        const response = await fetch(url, {
             method: "DELETE",
             body: payload !== undefined ? JSON.stringify(payload) : undefined,
             headers: this.getHeaders(headers)

@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import { IDataset } from "../../models/api/IDataset";
 import { IStore } from "../../models/api/IStore";
 import { IUser } from "../../models/api/IUser";
@@ -10,8 +11,8 @@ export class UsersClient {
 
     private cachedUsers: CachedData<IDataset<IUser[]>>;
 
-    constructor (private baseUrl: string, token: string) {
-        this.httpClient = new HttpClient(this.baseUrl);
+    constructor (private api: API, token: string) {
+        this.httpClient = new HttpClient();
 
         this.httpHeaders = {
             "Accept": "application/json",
@@ -23,7 +24,7 @@ export class UsersClient {
 
     public async getUsers (): Promise<IUser[]> {
         if (!this.cachedUsers) {
-            this.cachedUsers = new CachedData(async () => this.httpClient.get<IDataset<IUser[]>>(`/users`, this.httpHeaders));
+            this.cachedUsers = new CachedData(async () => this.httpClient.get<IDataset<IUser[]>>(this.api.data + `/datasets/users`, this.httpHeaders));
         }
 
         const users = await this.cachedUsers.getData();

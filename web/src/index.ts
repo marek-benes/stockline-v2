@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import "./scss/index.scss";
 
 import { App } from "./ts/App";
@@ -8,7 +9,11 @@ import { AuthClient } from "./ts/data/clients/AuthClient";
 // const Handlebars = require("handlebars/dist/handlebars");
 // console.log(Handlebars);
 
-const api = "http://localhost:5000";
+const api: API = {
+    stockline: "http://localhost:62801",
+    data: "http://localhost:62802",
+    maintenance: "http://localhost:62800"
+};
 
 async function bootstrap () {
     const authClient = new AuthClient(api);

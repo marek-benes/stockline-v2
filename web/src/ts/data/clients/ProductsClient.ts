@@ -1,3 +1,4 @@
+import { API } from "ts/models/IApi";
 import { IDataset } from "../../models/api/IDataset";
 import { IProduct, IProductRequest } from "../../models/api/IProduct";
 import { CachedData } from "../CachedData";
@@ -5,12 +6,14 @@ import { HttpClient } from "./HttpClient";
 
 export class ProductsClient {
     private httpClient: HttpClient;
+    private httpDatasetClient: HttpClient;
     private httpHeaders: { [key: string]: number | string };
 
     private cachedProducts: CachedData<IDataset<IProduct[]>>;
 
-    constructor (private baseUrl: string, token: string) {
-        this.httpClient = new HttpClient(this.baseUrl);
+    constructor (private api: API, token: string) {
+        this.httpClient = new HttpClient();
+        this.httpDatasetClient = new HttpClient();
 
         this.httpHeaders = {
             "Accept": "application/json",
@@ -21,7 +24,7 @@ export class ProductsClient {
 
     public async getProducts (options?: IProductRequest): Promise<IProduct[]> {
         if (!this.cachedProducts) {
-            this.cachedProducts = new CachedData(async () => this.httpClient.get<IDataset<IProduct[]>>(`/products${this.httpClient.createQueryString(options)}`, this.httpHeaders));
+            this.cachedProducts = new CachedData(async () => this.httpDatasetClient.get<IDataset<IProduct[]>>(this.api.data + `/datasets/products${this.httpClient.createQueryString(options)}`, this.httpHeaders));
         }
 
         const products = await this.cachedProducts.getData();
@@ -29,24 +32,24 @@ export class ProductsClient {
     }
 
     public async getProduct (id: string): Promise<IProduct> {
-        const product = await this.httpClient.get<IProduct>(`/products/${id}`, this.httpHeaders);
-        return product;
+        const products = await this.httpClient.get<IDataset<IProduct[]>>(this.api.data + `/datasets/products?id=${id}`, this.httpHeaders);
+        return products?.data[0];
     }
 
     public async postProduct (data: IProduct): Promise<IProduct> {
-        const product = await this.httpClient.post<IProduct>(`/products`, data, this.httpHeaders);
+        const product = await this.httpClient.post<IProduct>(this.api.stockline + `/products`, data, this.httpHeaders);
         this.cachedProducts.invalidate();
         return product;
     }
 
     public async putProduct (data: IProduct): Promise<IProduct> {
-        const product = await this.httpClient.put<IProduct>(`/products/${data.id}`, data, this.httpHeaders);
+        const product = await this.httpClient.put<IProduct>(this.api.stockline + `/products/${data.id}`, data, this.httpHeaders);
         this.cachedProducts.invalidate();
         return product;
     }
 
     public async deleteProduct (id: string): Promise<void> {
-        await this.httpClient.delete<IProduct>(`/products/${id}`, undefined, this.httpHeaders);
+        await this.httpClient.delete<IProduct>(this.api.stockline + `/products/${id}`, undefined, this.httpHeaders);
         this.cachedProducts.invalidate();
     }
 }
