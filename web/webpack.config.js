@@ -61,6 +61,10 @@ module.exports = env => {
                         {
                             from: `./src/index.html`,
                             to: "index.html"
+                        },
+                        {
+                            from: `./conf/stockline.json`,
+                            to: "stockline.json"
                         }
                     ]
                 }

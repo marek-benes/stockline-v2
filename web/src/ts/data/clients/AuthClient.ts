@@ -1,4 +1,4 @@
-import { API } from "ts/models/IApi";
+import { IApi } from "ts/models/IApi";
 import { IUser } from "../../models/api/IUser";
 import { HttpClient } from "./HttpClient";
 
@@ -37,7 +37,7 @@ export class AuthClient {
     private httpClient: HttpClient;
     private httpHeaders: { [key: string]: number | string };
 
-    constructor (public readonly api: API) {
+    constructor (public readonly api: IApi) {
         this.httpClient = new HttpClient();
 
         this.httpHeaders = {

@@ -1,4 +1,4 @@
-import { API } from "ts/models/IApi";
+import { IApi } from "ts/models/IApi";
 import { IDataset } from "../../models/api/IDataset";
 import { IStore } from "../../models/api/IStore";
 import { CachedData } from "../CachedData";
@@ -10,7 +10,7 @@ export class StoresClient {
 
     private cachedStores: CachedData<IDataset<IStore[]>>;
 
-    constructor (private api: API, token: string) {
+    constructor (private api: IApi, token: string) {
         this.httpClient = new HttpClient();
 
         this.httpHeaders = {

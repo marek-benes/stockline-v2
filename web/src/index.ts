@@ -1,31 +1,30 @@
-import { API } from "ts/models/IApi";
+import { HttpClient } from "ts/data/clients/HttpClient";
+import { IApi } from "ts/models/IApi";
 import "./scss/index.scss";
 
 import { App } from "./ts/App";
 import { Login } from "./ts/components/login/Login";
 import { AuthClient } from "./ts/data/clients/AuthClient";
 
-// this does not seem right
-// const Handlebars = require("handlebars/dist/handlebars");
-// console.log(Handlebars);
-
-const api: API = {
-    stockline: "http://localhost:62801",
-    data: "http://localhost:62802",
-    maintenance: "http://localhost:62800"
-};
+async function getConfig (): Promise<{ api: IApi; }> {
+    const http = new HttpClient();
+    const data: any = http.get("./stockline.json", {});
+    return data;
+}
 
 async function bootstrap () {
-    const authClient = new AuthClient(api);
+    const config = await getConfig();
+
+    const authClient = new AuthClient(config.api);
 
     // const token = AuthClient.getStoredToken();
     const authUser = await authClient.isLoggedIn();
 
     if (authUser) {
-        new App(api);
+        new App(config.api);
     } else {
         const login = new Login(authClient);
-        login.onLogin = () => new App(api);
+        login.onLogin = () => new App(config.api);
         login.show();
     }
 }

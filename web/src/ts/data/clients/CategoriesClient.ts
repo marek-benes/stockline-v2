@@ -1,4 +1,4 @@
-import { API } from "ts/models/IApi";
+import { IApi } from "ts/models/IApi";
 import { ICategory, ICategoryRequest } from "../../models/api/ICategory";
 import { IDataset } from "../../models/api/IDataset";
 import { CachedData } from "../CachedData";
@@ -10,7 +10,7 @@ export class CategoriesClient {
 
     private cachedCategories: CachedData<IDataset<ICategory[]>>;
 
-    constructor (private api: API, token: string) {
+    constructor (private api: IApi, token: string) {
         this.httpClient = new HttpClient();
 
         this.httpHeaders = {

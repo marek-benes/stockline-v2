@@ -1,4 +1,4 @@
-import { API } from "ts/models/IApi";
+import { IApi } from "ts/models/IApi";
 import { IDataset } from "../../models/api/IDataset";
 import { IReceipt, IReceiptRequest } from "../../models/api/IReceipt";
 import { HttpClient } from "./HttpClient";
@@ -7,7 +7,7 @@ export class ReceiptsClient {
     private httpClient: HttpClient;
     private httpHeaders: { [key: string]: number | string };
 
-    constructor (private api: API, token: string) {
+    constructor (private api: IApi, token: string) {
         this.httpClient = new HttpClient();
 
         this.httpHeaders = {

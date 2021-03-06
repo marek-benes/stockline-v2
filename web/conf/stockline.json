@@ -1,0 +1,7 @@
+{
+    "api": {
+        "stockline": "http://localhost:62801",
+        "data": "http://localhost:62802",
+        "maintenance": "http://localhost:62800"
+    }
+}

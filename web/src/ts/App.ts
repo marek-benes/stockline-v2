@@ -17,7 +17,7 @@ import { CategoriesScreen } from "./screens/wholesale/categories/CategoriesScree
 import { CustomerDetailScreen } from "./screens/wholesale/customers/detail/CustomerDetailScreen";
 import { CustomersScreen } from "./screens/wholesale/customers/CustomersScreen";
 import { SuppliersScreen } from "./screens/wholesale/suppliers/SuppliersScreen";
-import { API } from "./models/IApi";
+import { IApi } from "./models/IApi";
 
 export class App {
     private context: AppContext;
@@ -41,7 +41,7 @@ export class App {
 
     private authClient: AuthClient;
 
-    constructor (api: API) {
+    constructor (api: IApi) {
         this.authClient = new AuthClient(api);
         const token = AuthClient.getStoredToken();
 
