@@ -25,11 +25,11 @@ export abstract class ApiServer<T extends ApiServerOptions> extends Microservice
         this.server = createServer();
 
         // All necessary middleware
-        this.server.use(this.enableOptions);
+        this.server.pre(this.enableCors);
         this.server.use(this.customHeaders);
-        this.server.use(this.authorization);
-        this.server.use(plugins.queryParser());
         this.server.use(plugins.bodyParser({ reviver: JsonHelper.reviver }));
+        this.server.use(plugins.queryParser());
+        this.server.use(this.authorization);
 
         // Add common /info endpoint
         this.addRoute("GET", "/info", this.getInfo);
@@ -46,7 +46,7 @@ export abstract class ApiServer<T extends ApiServerOptions> extends Microservice
         }
     }
 
-    public addRoute(method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE"| "OPTIONS", route: string, handler: RequestHandler): void {
+    public addRoute(method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", route: string, handler: RequestHandler): void {
 
         // Wrap handler to new handler that catches unhandled exceptions
         const saveHandler: RequestHandler = async (req: Request, res: Response, next: Next) => {
@@ -86,10 +86,6 @@ export abstract class ApiServer<T extends ApiServerOptions> extends Microservice
             case "DELETE":
                 this.server.del(route, saveHandler);
                 break;
-            case "OPTIONS":
-                this.server.opts(route, saveHandler);
-                break;
-
             default:
                 this.context.logger.w(`Unknown method ${method}, route handler will be not registered`);
         }
@@ -176,7 +172,18 @@ export abstract class ApiServer<T extends ApiServerOptions> extends Microservice
         this.addRoutes(controller.getRoutes());
     }
 
-    private enableOptions: RequestHandler = (req: Request, res: Response, next: Next) => {
+    private enableCors: RequestHandler = (req: Request, res: Response, next: Next) => {
+        // CORS headers
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "*");
+        res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+
+        // Only in PRE mode with OPTIONS method
+        if (req.method == "OPTIONS") {
+            res.send(200);
+            return;
+        }
+
         // Finish the pipeline
         return next();
     };
