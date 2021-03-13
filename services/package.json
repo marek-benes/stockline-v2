@@ -3,8 +3,7 @@
   "version": "2.0.0",
   "description": "STOCKLINE 2 API services",
   "scripts": {
-    "clean": "rm -f -r ./dist",
-    "compile": "npm run clean && tsc",
+    "compile": "rm -f -r ./dist && tsc",
     "start-data": "npm run compile && node ./dist/api/data-api/startup.js",
     "start-api": "npm run compile && node ./dist/api/stockline-api/startup.js"
   },

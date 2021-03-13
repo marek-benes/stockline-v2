@@ -6,6 +6,10 @@ export class ProductFilters {
         let filter = { $and: [] };
 
         // Build FilterQuery
+        if (queryString["id"]) {
+            filter.$and.push({ "_id": new ObjectId(queryString["id"]) });
+        }
+
         if (queryString["code"]) {
             filter.$and.push({ "code": queryString["code"] });
         }
